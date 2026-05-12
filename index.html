@@ -12,17 +12,18 @@ body{
     font-family:sans-serif;
     background:#33ccbb;
     color:black;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    height:100vh;
-    padding-top:40px;
-    box-sizing:border-box;
+    position:relative;
+    min-height:100vh;
 }
 
 .screen{
     width:90%;
     max-width:400px;
+
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
 }
 
 .panel{
@@ -39,7 +40,16 @@ body{
     text-align:center;
     font-size:28px;
     font-weight:bold;
-    margin-bottom:20px;
+
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:80%;
+    max-width:360px;
+
+    z-index:10;
 }
 
 .notice{
@@ -107,6 +117,7 @@ button:disabled{
     border-radius:12px;
     font-size:18px;
     cursor:pointer;
+    z-index:20;
 }
 </style>
 </head>
@@ -117,12 +128,12 @@ button:disabled{
 🔉
 </div>
 
-<div class="screen">
-
-<!-- 独立タイトル -->
+<!-- タイトル -->
 <div class="titleBox">
 おだいルーレット
 </div>
+
+<div class="screen">
 
 <!-- タイトル画面 -->
 <div id="titleScreen" class="panel">
@@ -148,11 +159,11 @@ button:disabled{
 ？？？
 </div>
 
-<div class="slot" id="where">
+<div class="slot" id="when">
 ？？？
 </div>
 
-<div class="slot" id="when">
+<div class="slot" id="where">
 ？？？
 </div>
 
@@ -184,8 +195,14 @@ const whoList = [
     "変人ワンツーが",
     "天馬司が",
     "神代類が",
-    "先生が",
-    "アイドルが"
+];
+
+const whenList = [
+    "朝に",
+    "夏休みに",
+    "昨日",
+    "授業中に",
+    "放課後に"
 ];
 
 const whereList = [
@@ -193,31 +210,23 @@ const whereList = [
     "宇宙で",
     "海で",
     "屋上で",
-    "コンビニで"
-];
-
-const whenList = [
-    "授業中に",
-    "夏休みに",
-    "昨日",
-    "放課後に",
-    "朝5時に"
+    "ミスって"
 ];
 
 const whatList = [
-    "踊った",
+    "うっかり宇宙に行った",
     "告白した",
     "爆発した",
-    "犬に脅えて逃げた",
-    "吹っ飛んだ"
+    "歌って踊った",
+    "パンを食べた"
 ];
 
 const titleScreen = document.getElementById("titleScreen");
 const gameScreen = document.getElementById("gameScreen");
 
 const who = document.getElementById("who");
-const where = document.getElementById("where");
 const when = document.getElementById("when");
+const where = document.getElementById("where");
 const what = document.getElementById("what");
 
 function playClick(){
@@ -280,13 +289,13 @@ document.getElementById("spinBtn").addEventListener("click", () => {
     spinBtn.textContent = "…待ってね…";
 
     const finalWho = randomItem(whoList);
-    const finalWhere = randomItem(whereList);
     const finalWhen = randomItem(whenList);
+    const finalWhere = randomItem(whereList);
     const finalWhat = randomItem(whatList);
 
     spinSlot(who, whoList, 1000, finalWho);
-    spinSlot(where, whereList, 1400, finalWhere);
-    spinSlot(when, whenList, 1800, finalWhen);
+    spinSlot(when, whenList, 1400, finalWhen);
+    spinSlot(where, whereList, 1800, finalWhere);
     spinSlot(what, whatList, 2200, finalWhat);
 
     setTimeout(() => {
