@@ -14,8 +14,10 @@ body{
     color:black;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:flex-start;
     height:100vh;
+    padding-top:40px;
+    box-sizing:border-box;
 }
 
 .screen{
@@ -30,7 +32,10 @@ body{
     box-sizing:border-box;
 }
 
-.title{
+.titleBox{
+    background:white;
+    border-radius:16px;
+    padding:14px;
     text-align:center;
     font-size:28px;
     font-weight:bold;
@@ -43,13 +48,20 @@ body{
 }
 
 button{
-    background:white;
+    background:#33ccbb;
     color:black;
     border:none;
-    border-radius:12px;
+    border-radius:14px;
     padding:12px 20px;
     font-size:18px;
     cursor:pointer;
+    width:100%;
+    max-width:220px;
+}
+
+button:disabled{
+    opacity:0.7;
+    cursor:default;
 }
 
 .center{
@@ -84,13 +96,6 @@ button{
     display:none;
 }
 
-#result{
-    margin-top:20px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-}
-
 .soundToggle{
     position:fixed;
     top:15px;
@@ -99,6 +104,7 @@ button{
     padding:10px 14px;
     border-radius:12px;
     font-size:18px;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -114,7 +120,7 @@ button{
 <!-- タイトル画面 -->
 <div id="titleScreen" class="panel">
 
-<div class="title">
+<div class="titleBox">
 おだいルーレット
 </div>
 
@@ -133,7 +139,7 @@ button{
 <!-- ルーレット画面 -->
 <div id="gameScreen" class="panel hidden">
 
-<div class="title">
+<div class="titleBox">
 おだいルーレット
 </div>
 
@@ -151,13 +157,15 @@ button{
 ？？？
 </div>
 
+<div class="slot" id="what">
+？？？
+</div>
+
 </div>
 
 <div class="center" style="margin-top:20px;">
 <button id="spinBtn">まわす</button>
 </div>
-
-<div id="result"></div>
 
 </div>
 
@@ -174,11 +182,11 @@ clickSound.volume = 0.5;
 let soundOn = true;
 
 const whoList = [
-    "ねこ",
-    "魔王",
-    "宇宙人",
-    "先生",
-    "アイドル"
+    "ねこが",
+    "魔王が",
+    "宇宙人が",
+    "先生が",
+    "アイドルが"
 ];
 
 const whereList = [
@@ -197,14 +205,21 @@ const whenList = [
     "朝5時"
 ];
 
+const whatList = [
+    "踊った",
+    "告白した",
+    "爆発した",
+    "歌った",
+    "寝た"
+];
+
 const titleScreen = document.getElementById("titleScreen");
 const gameScreen = document.getElementById("gameScreen");
 
 const who = document.getElementById("who");
 const where = document.getElementById("where");
 const when = document.getElementById("when");
-
-const result = document.getElementById("result");
+const what = document.getElementById("what");
 
 function playClick(){
     if(soundOn){
@@ -260,20 +275,27 @@ document.getElementById("spinBtn").addEventListener("click", () => {
 
     playClick();
 
-    result.textContent = "";
+    const spinBtn = document.getElementById("spinBtn");
+
+    spinBtn.disabled = true;
+    spinBtn.textContent = "…待ってね…";
 
     const finalWho = randomItem(whoList);
     const finalWhere = randomItem(whereList);
     const finalWhen = randomItem(whenList);
+    const finalWhat = randomItem(whatList);
 
     spinSlot(who, whoList, 1000, finalWho);
     spinSlot(where, whereList, 1400, finalWhere);
     spinSlot(when, whenList, 1800, finalWhen);
+    spinSlot(what, whatList, 2200, finalWhat);
 
     setTimeout(() => {
-        result.textContent =
-            `${finalWho}が ${finalWhere} ${finalWhen}`;
-    }, 1900);
+
+        spinBtn.disabled = false;
+        spinBtn.textContent = "まわす";
+
+    }, 2300);
 
 });
 </script>
