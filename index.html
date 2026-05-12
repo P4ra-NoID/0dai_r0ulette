@@ -44,7 +44,7 @@ body{
 
 .notice{
     line-height:1.8;
-    margin-bottom:20px;
+    text-align:center;
 }
 
 button{
@@ -66,6 +66,7 @@ button:disabled{
 
 .center{
     text-align:center;
+    margin-top:20px;
 }
 
 .slot-container{
@@ -100,7 +101,8 @@ button:disabled{
     position:fixed;
     top:15px;
     right:15px;
-    background:white;
+    background:rgba(255,255,255,0.6);
+    backdrop-filter:blur(4px);
     padding:10px 14px;
     border-radius:12px;
     font-size:18px;
@@ -117,12 +119,13 @@ button:disabled{
 
 <div class="screen">
 
-<!-- タイトル画面 -->
-<div id="titleScreen" class="panel">
-
+<!-- 独立タイトル -->
 <div class="titleBox">
 おだいルーレット
 </div>
+
+<!-- タイトル画面 -->
+<div id="titleScreen" class="panel">
 
 <div class="notice">
 ・結果はランダムです<br>
@@ -138,10 +141,6 @@ button:disabled{
 
 <!-- ルーレット画面 -->
 <div id="gameScreen" class="panel hidden">
-
-<div class="titleBox">
-おだいルーレット
-</div>
 
 <div class="slot-container">
 
@@ -163,7 +162,7 @@ button:disabled{
 
 </div>
 
-<div class="center" style="margin-top:20px;">
+<div class="center">
 <button id="spinBtn">まわす</button>
 </div>
 
@@ -182,9 +181,9 @@ clickSound.volume = 0.5;
 let soundOn = true;
 
 const whoList = [
-    "ねこが",
-    "魔王が",
-    "宇宙人が",
+    "変人ワンツーが",
+    "天馬司が",
+    "神代類が",
     "先生が",
     "アイドルが"
 ];
@@ -198,19 +197,19 @@ const whereList = [
 ];
 
 const whenList = [
-    "深夜2時",
+    "授業中に",
     "夏休みに",
     "昨日",
-    "100年後",
-    "朝5時"
+    "放課後に",
+    "朝5時に"
 ];
 
 const whatList = [
     "踊った",
     "告白した",
     "爆発した",
-    "歌った",
-    "寝た"
+    "犬に脅えて逃げた",
+    "吹っ飛んだ"
 ];
 
 const titleScreen = document.getElementById("titleScreen");
