@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+お<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -89,7 +89,9 @@ button:disabled{
 .slot{
     background:white;
     border-radius:15px;
-    height:72px;
+
+    min-height:72px;
+
     overflow:hidden;
     margin-bottom:15px;
     position:relative;
@@ -98,13 +100,13 @@ button:disabled{
     align-items:center;
     justify-content:center;
 
-    font-size:22px;
+    font-size:clamp(16px, 5vw, 22px);
     font-weight:bold;
 
     text-align:center;
     line-height:1.3;
 
-    padding:8px;
+    padding:10px;
     box-sizing:border-box;
 
     word-break:break-word;
@@ -247,19 +249,20 @@ const whoList = [
 ];
 
 const whenList = [
-    "朝に",
-    "夏休みに",
+    "朝",
+    "夏休み",
     "昨日",
-    "授業中に",
-    "放課後に",
     "このあと",
     "転がりつつ",
     "なんと",
     "雨上がり、"
+    "わくわくしながら"
 ];
 
 const whereList = [
     "学校で",
+    "放課後に",
+    "授業中に",
     "教室で",
     "宇宙で",
     "海で",
@@ -307,7 +310,9 @@ const whatList = [
     "虹を見た",
     "奇行すぎる奇行をした", 
     "泣いちゃった！",
-    "色々あってその後土に肩まで埋まり、砂風呂？と言われた。"
+    "色々あってその後土に肩まで埋まり、土風呂？と言われた。",
+    "試しに勢いでASMR配信をやったらめちゃくちゃに怒られた",
+    "試しに勢いでASMR配信をやったらかなり好評だったが、もうしなくていいかなと思っている。"
 ];
 
 const titleScreen = document.getElementById("titleScreen");
