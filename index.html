@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>おだいルーレット</title>
+
+<style>
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#33ccbb;
+    color:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.screen{
+    width:90%;
+    max-width:400px;
+}
+
+.panel{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.title{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.notice{
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+button{
+    background:white;
+    color:black;
+    border:none;
+    border-radius:12px;
+    padding:12px 20px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.center{
+    text-align:center;
+}
+
+.slot-container{
+    background:#fff4a8;
+    border-radius:20px;
+    padding:15px;
+}
+
+.slot{
+    background:white;
+    border-radius:15px;
+    height:60px;
+    overflow:hidden;
+    margin-bottom:15px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.slot:last-child{
+    margin-bottom:0;
+}
+
+.hidden{
+    display:none;
+}
+
+#result{
+    margin-top:20px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.soundToggle{
+    position:fixed;
+    top:15px;
+    right:15px;
+    background:white;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="soundToggle" id="soundBtn">
+🔉
+</div>
+
+<div class="screen">
+
+<!-- タイトル画面 -->
+<div id="titleScreen" class="panel">
+
+<div class="title">
+おだいルーレット
+</div>
+
+<div class="notice">
+・結果はランダムです<br>
+・みんな仲良く遊びましょう<br>
+・音が流れます
+</div>
+
+<div class="center">
+<button id="startBtn">はじめる</button>
+</div>
+
+</div>
+
+<!-- ルーレット画面 -->
+<div id="gameScreen" class="panel hidden">
+
+<div class="title">
+おだいルーレット
+</div>
+
+<div class="slot-container">
+
+<div class="slot" id="who">
+？？？
+</div>
+
+<div class="slot" id="where">
+？？？
+</div>
+
+<div class="slot" id="when">
+？？？
+</div>
+
+</div>
+
+<div class="center" style="margin-top:20px;">
+<button id="spinBtn">まわす</button>
+</div>
+
+<div id="result"></div>
+
+</div>
+
+</div>
+
+<script>
+const bgm = new Audio("https://raw.githubusercontent.com/P4ra-NoID/0dai_r0ulette/main/famipop3.mp3");
+bgm.loop = true;
+bgm.volume = 0.2;
+
+const clickSound = new Audio("https://raw.githubusercontent.com/P4ra-NoID/0dai_r0ulette/main/click32.mp3");
+clickSound.volume = 0.5;
+
+let soundOn = true;
+
+const whoList = [
+    "ねこ",
+    "魔王",
+    "宇宙人",
+    "先生",
+    "アイドル"
+];
+
+const whereList = [
+    "学校で",
+    "宇宙で",
+    "海で",
+    "屋上で",
+    "コンビニで"
+];
+
+const whenList = [
+    "深夜2時",
+    "夏休みに",
+    "昨日",
+    "100年後",
+    "朝5時"
+];
+
+const titleScreen = document.getElementById("titleScreen");
+const gameScreen = document.getElementById("gameScreen");
+
+const who = document.getElementById("who");
+const where = document.getElementById("where");
+const when = document.getElementById("when");
+
+const result = document.getElementById("result");
+
+function playClick(){
+    if(soundOn){
+        clickSound.currentTime = 0;
+        clickSound.play();
+    }
+}
+
+document.getElementById("startBtn").addEventListener("click", () => {
+
+    playClick();
+
+    titleScreen.classList.add("hidden");
+    gameScreen.classList.remove("hidden");
+
+    if(soundOn){
+        bgm.play();
+    }
+});
+
+document.getElementById("soundBtn").addEventListener("click", () => {
+
+    soundOn = !soundOn;
+
+    if(soundOn){
+        document.getElementById("soundBtn").textContent = "🔉";
+        bgm.play();
+    }else{
+        document.getElementById("soundBtn").textContent = "🔇";
+        bgm.pause();
+    }
+
+    playClick();
+});
+
+function randomItem(list){
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function spinSlot(element, list, duration, finalText){
+
+    const interval = setInterval(() => {
+        element.textContent = randomItem(list);
+    }, 80);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        element.textContent = finalText;
+    }, duration);
+}
+
+document.getElementById("spinBtn").addEventListener("click", () => {
+
+    playClick();
+
+    result.textContent = "";
+
+    const finalWho = randomItem(whoList);
+    const finalWhere = randomItem(whereList);
+    const finalWhen = randomItem(whenList);
+
+    spinSlot(who, whoList, 1000, finalWho);
+    spinSlot(where, whereList, 1400, finalWhere);
+    spinSlot(when, whenList, 1800, finalWhen);
+
+    setTimeout(() => {
+        result.textContent =
+            `${finalWho}が ${finalWhere} ${finalWhen}`;
+    }, 1900);
+
+});
+</script>
+
+</body>
+</html>
