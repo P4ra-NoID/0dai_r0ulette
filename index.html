@@ -229,6 +229,9 @@ bgm.volume = 0.2;
 const clickSound = new Audio("https://raw.githubusercontent.com/P4ra-NoID/0dai_r0ulette/main/click32.mp3");
 clickSound.volume = 0.5;
 
+const startSound = new Audio("https://raw.githubusercontent.com/P4ra-NoID/0dai_r0ulette/main/Hajimei.mp3");
+startSound.volume = 0.8;
+
 let soundOn = true;
 
 const whoList = [
@@ -291,7 +294,10 @@ function playClick(){
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
-    playClick();
+    if(soundOn){
+        startSound.currentTime = 0;
+        startSound.play();
+    }
 
     titleScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
