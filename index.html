@@ -55,6 +55,7 @@ body{
 .notice{
     line-height:1.8;
     text-align:center;
+    font-size:14px;
 }
 
 button{
@@ -88,15 +89,25 @@ button:disabled{
 .slot{
     background:white;
     border-radius:15px;
-    height:60px;
+    height:72px;
     overflow:hidden;
     margin-bottom:15px;
     position:relative;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:28px;
+
+    font-size:22px;
     font-weight:bold;
+
+    text-align:center;
+    line-height:1.3;
+
+    padding:8px;
+    box-sizing:border-box;
+
+    word-break:break-word;
 }
 
 .slot:last-child{
@@ -120,7 +131,7 @@ button:disabled{
     z-index:20;
 }
 
-    .credit{
+.credit{
     margin-top:18px;
     text-align:center;
     font-size:13px;
@@ -135,7 +146,6 @@ button:disabled{
     padding:2px 6px;
     border-radius:8px;
 }
-    
 </style>
 </head>
 
@@ -200,8 +210,7 @@ button:disabled{
 
 </div>
 
-</div>
-
+<!-- クレジット -->
 <div class="credit">
 製作者:春もち【観葉植物】<br>
 
@@ -209,7 +218,9 @@ button:disabled{
 @Ech_oni3
 </a>
 </div>
-    
+
+</div>
+
 <script>
 const bgm = new Audio("https://raw.githubusercontent.com/P4ra-NoID/0dai_r0ulette/main/famipop3.mp3");
 bgm.loop = true;
@@ -232,7 +243,6 @@ const whenList = [
     "昨日",
     "授業中に",
     "放課後に"
-
 ];
 
 const whereList = [
@@ -337,16 +347,16 @@ document.getElementById("spinBtn").addEventListener("click", () => {
     const finalWhat = randomItem(whatList);
 
     spinSlot(who, whoList, 1000, finalWho);
-    spinSlot(when, whenList, 1400, finalWhen);
-    spinSlot(where, whereList, 1800, finalWhere);
-    spinSlot(what, whatList, 2200, finalWhat);
+    spinSlot(when, whenList, 1000, finalWhen);
+    spinSlot(where, whereList, 1000, finalWhere);
+    spinSlot(what, whatList, 1000, finalWhat);
 
     setTimeout(() => {
 
         spinBtn.disabled = false;
         spinBtn.textContent = "まわす";
 
-    }, 2300);
+    }, 1100);
 
 });
 </script>
